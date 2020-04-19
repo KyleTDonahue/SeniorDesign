@@ -1,3 +1,16 @@
+/*
+ * Kyle Donahue April 2020
+ * MREPSInterface
+ * 	This is the highest level class in the project. The main function
+ * 		creates a new instance of the class, which has an instance of
+ * 		the model, view, and control. Nothing else should need to be
+ * 		added to this class.
+ * 
+ * 	MVC (Model View Controller) Explanation:
+ * 		This system separates different functions of the application to
+ * 		streamline and simplify the coding project. 
+ */
+
 import java.awt.Container;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;

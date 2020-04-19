@@ -1,3 +1,14 @@
+/*
+ * Kyle Donahue April 2020
+ * MREPSView
+ * 		The view dictates what is shown to the user. It should request be set
+ * 		up to request data from the control rather than the model directly. This
+ * 		allows features that include storing multiple instances of MREPSModel. 
+ * 		The control can be setup to choose which model the data is being pulled from.
+ * 		The view is divided into a relatively simple state system, using a string value
+ * 		for "state". From there it's just setting up swing interfaces. Optimally, all of
+ * 		the "actionPerformed" functions should be calls to functions in the control class
+ */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -17,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 
@@ -48,8 +60,11 @@ public class MREPSView
      {
              if(currentState.equalsIgnoreCase("Start")){
             	 frame.getContentPane().removeAll();
-            	 frame.setLayout(new GridLayout());
+            	 frame.setLayout(new GridLayout(2,0));
             	 
+            	 
+            	 JLabel startExplain = new JLabel("This is the start state where the user can set the filepath to be read/written",SwingConstants.CENTER);
+            	 frame.add(startExplain);
             	 JButton startButton = new JButton("Go to main");
             	 startButton.addActionListener(new ActionListener()
                  {
@@ -65,6 +80,7 @@ public class MREPSView
              }
              else if(currentState.equalsIgnoreCase("Main")) {
             	 frame.getContentPane().removeAll();
+            	 frame.setLayout(new GridLayout(0,3));
             	 GridBagConstraints c = new GridBagConstraints();
          		
          		///////COLUMN A//////////
@@ -77,34 +93,23 @@ public class MREPSView
          		c.gridheight = 3;
          		cola.setBackground(new Color(200,200,200));
          		frame.add(cola,c);
-
+         		
          		//Col A Subcomponents
          		JLabel colATitle = new JLabel("Connected Modules     ");
          		cola.add(colATitle);
+         		JLabel dummyA = new JLabel("<html>This<br/>"
+         				+ "will<br/>"
+         				+ "be<br/>"
+         				+ "a<br/>"
+         				+ "dropdown<br/>"
+         				+ "menu<br/>"
+         				+ "of <br/>"
+         				+ "the<br/>"
+         				+ "connected<br/>"
+         				+ "modules</html>",SwingConstants.CENTER);
+         		cola.add(dummyA);
          		JList<String> modList=null;
-         		/*
-         		try {
-         			sc = new Scanner(new File(path+"\\test.txt"));
-         			ArrayList<String>read = new ArrayList<String>();
-         			int i=0;
-         			while(sc.hasNextLine()) {
-         				read.add(sc.nextLine());
-         			}
-         			String[] data = read.toArray(new String[read.size()]);
-         			modList = new JList<String>(data);
-         		}
-         		catch(Exception e) {
-         			e.printStackTrace(System.err);
-         			System.err.println("Error reading from file \""+path+"\test.txt");
-         		}
-         		if(modList!=null) {
-         			modList.setBackground(new Color(200,200,200));
-         			cola.add(modList);
-         		}
-         		else {
-         			System.err.println("Error reading from file \""+path+"\test.txt\nNull JList");
-         		}
-         		*/
+
          		
          		
          		///////COLUMN B//////////
@@ -128,6 +133,7 @@ public class MREPSView
          		currentMod.setBackground(new Color(110,110,110));
          		currentMod.setLayout(new BoxLayout(currentMod,BoxLayout.Y_AXIS));
          		currentMod.add(new JLabel("Part Number:"));
+         		//Example Text
          		currentMod.add(new JLabel("Line 1:"));
          		currentMod.add(new JLabel("Line 2:"));
          		currentMod.add(new JLabel("Line 3:"));
@@ -151,7 +157,8 @@ public class MREPSView
                 {
                         public void actionPerformed(ActionEvent e)
                         {
-                                System.out.println("Export Pressed");
+                            //Call a controller functions    
+                        	System.out.println("Export Pressed");
                         }
                 });
          		config.add(exportButton);
@@ -160,7 +167,8 @@ public class MREPSView
                 {
                         public void actionPerformed(ActionEvent e)
                         {
-                                System.out.println("Import Pressed");
+                        	//Call a controller functions
+                            System.out.println("Import Pressed");
                         }
                 });
          		config.add(importButton);
